@@ -367,10 +367,10 @@ Tasks:
 Create a new GitHub repo manually.
 
 Recommendations:
-- [ ] Make it public (no secrets in code; `.env` is gitignored)
-- [ ] Do not auto-add README
-- [ ] Do not auto-add `.gitignore`
-- [ ] Do not auto-add license unless desired
+- [x] Make it public (no secrets in code; `.env` is gitignored)
+- [x] Do not auto-add README
+- [x] Do not auto-add `.gitignore`
+- [x] Do not auto-add license unless desired
 
 ### 4.2 Connect local repo to GitHub
 
@@ -383,9 +383,9 @@ git push -u origin main
 ```
 
 Tasks:
-- [ ] Add remote
-- [ ] Rename branch to `main`
-- [ ] Push initial commit
+- [x] Add remote
+- [x] Rename branch to `main`
+- [x] Push initial commit
 
 ### 4.3 Ongoing developer workflow
 
