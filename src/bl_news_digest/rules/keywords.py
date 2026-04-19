@@ -8,39 +8,19 @@ KEYWORDS: list[str] = [
     # Hard include — core AVGS terms
     "avgs",
     "aktivierungs- und vermittlungsgutschein",
-    "aktivierungsgutschein",
-    "vermittlungsgutschein",
     "§45 sgb iii",
-    "paragraph 45",
     "maßnahme bei einem träger",
     "azav",
     # Provider / compliance
     "trägerzulassung",
     "maßnahmezulassung",
-    "fachkundige stelle",
+    "maßnahmenzulassung",
     "akkreditierung",
     "coaching und aktivierung",
     "bildungsträger",
-    "zulassung",
-    # Labor market / demand
-    "jobcenter",
-    "agentur für arbeit",
-    "bundesagentur für arbeit",
-    "arbeitslos",
-    "arbeitssuchend",
-    "sgb ii",
-    "sgb iii",
-    "berufliche neuorientierung",
-    "arbeitsmarkt",
-    "beschäftigung",
-    "erwerbslosigkeit",
-    # BeginnerLuft-fit context
-    "burnout",
-    "migration",
-    "wiedereinstieg",
-    "gründung",
-    "existenzgründung",
-    "karrierecoaching",
-    "berufsberatung",
-    "qualifizierung",
+]
+
+# Domains that must always be rejected regardless of keyword matches.
+BLOCKED_DOMAINS: list[str] = [
+    "beginnerluft.de",
 ]

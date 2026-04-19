@@ -70,7 +70,7 @@ CREATE INDEX IF NOT EXISTS idx_normalized_status
 CREATE TABLE IF NOT EXISTS item_reviews (
     id                       INTEGER PRIMARY KEY AUTOINCREMENT,
     item_id                  INTEGER NOT NULL,
-    model_name               TEXT NOT NULL,
+    content_hash             TEXT NOT NULL,
     decision                 TEXT NOT NULL,
     topic_type               TEXT,
     relevance_score          REAL,
@@ -80,10 +80,11 @@ CREATE TABLE IF NOT EXISTS item_reviews (
     urgency_score            REAL,
     confidence               REAL,
     summary                  TEXT,
-    why_relevant_json        TEXT,
-    recommended_actions_json TEXT,
+    why_relevant             TEXT,
+    recommended_actions      TEXT,
     review_json              TEXT NOT NULL,
-    created_at               TEXT NOT NULL,
+    reviewed_at              TEXT NOT NULL,
+    cache_hit                INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (item_id) REFERENCES normalized_items(id)
 );
 

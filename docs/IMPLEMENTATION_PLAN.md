@@ -801,11 +801,11 @@ Convert all source items into one common schema and remove duplicates.
 Shortlist only externally relevant items before AI review.
 
 ## Tasks
-- [ ] Create keyword allowlist covering AVGS, AZAV, labor-market activation, and coaching topics
-- [ ] Check titles and summaries for any keyword match
-- [ ] Pass any item with at least one keyword match to AI review
-- [ ] Reject items with zero keyword matches before sending to AI
-- [ ] Apply hard domain exclusions before keyword check
+- [x] Create keyword allowlist covering AVGS, AZAV, labor-market activation, and coaching topics
+- [x] Check titles and summaries for any keyword match
+- [x] Pass any item with at least one keyword match to AI review
+- [x] Reject items with zero keyword matches before sending to AI
+- [x] Apply hard domain exclusions before keyword check
 
 ## Important filtering rule
 
@@ -819,47 +819,34 @@ Do NOT include:
 ## Suggested keyword categories
 
 ### Hard include terms
-- [ ] `avgs`
-- [ ] `aktivierungs- und vermittlungsgutschein`
-- [ ] `§45 sgb iii`
-- [ ] `maßnahme bei einem träger`
-- [ ] `azav`
+- [x] `avgs`
+- [x] `aktivierungs- und vermittlungsgutschein`
+- [x] `§45 sgb iii`
+- [x] `maßnahme bei einem träger`
+- [x] `azav`
 
 ### Strong provider / compliance terms
-- [ ] `trägerzulassung`
-- [ ] `maßnahmezulassung`
-- [ ] `fachkundige stelle`
-- [ ] `akkreditierung`
-- [ ] `coaching und aktivierung`
+- [x] `trägerzulassung`
+- [x] `maßnahmezulassung`
+- [x] `maßnahmenzulassung`
+- [x] `akkreditierung`
+- [x] `coaching und aktivierung`
+- [x] `bildungsträger`
 
-### Demand and market terms
-- [ ] `jobcenter`
-- [ ] `agentur für arbeit`
-- [ ] `arbeitslos`
-- [ ] `arbeitssuchend`
-- [ ] `berufliche neuorientierung`
-- [ ] `bewerbung`
-
-### BeginnerLuft-fit context terms
-- [ ] `burnout`
-- [ ] `migration`
-- [ ] `wiedereinstieg`
-- [ ] `gründung`
-- [ ] `karrierecoaching`
 
 ## Filter logic
-- [ ] Any keyword match -> send to AI review
-- [ ] No keyword match -> discard without AI call
-- [ ] Hard exclusion domain -> always reject, regardless of keywords
+- [x] Any keyword match -> send to AI review
+- [x] No keyword match -> discard without AI call
+- [x] Hard exclusion domain -> always reject, regardless of keywords
 
 ## Deliverables
-- [ ] Keyword allowlist covering all relevant topic categories
-- [ ] Candidate shortlist passed to AI
+- [x] Keyword allowlist covering all relevant topic categories
+- [x] Candidate shortlist passed to AI
 
 ## Acceptance criteria
-- [ ] Obvious AVGS items pass
-- [ ] Obvious noise items fail
-- [ ] BeginnerLuft-owned URLs are always rejected
+- [x] Obvious AVGS items pass
+- [x] Obvious noise items fail
+- [x] BeginnerLuft-owned URLs are always rejected
 
 ---
 
@@ -869,11 +856,11 @@ Do NOT include:
 Use AI only on shortlisted items and store structured review results.
 
 ## Tasks
-- [ ] Create JSON schema for per-item review
-- [ ] Create a strict AI prompt that includes full BeginnerLuft company context
-- [ ] Validate model output against schema using Pydantic
-- [ ] Cache reviews by content hash to avoid re-reviewing unchanged items
-- [ ] Use AI scores to rank items and select the top 5
+- [x] Create JSON schema for per-item review
+- [x] Create a strict AI prompt that includes full BeginnerLuft company context
+- [x] Validate model output against schema using Pydantic
+- [x] Cache reviews by content hash to avoid re-reviewing unchanged items
+- [x] Use AI scores to rank items and select the top 5
 
 ## AI system prompt requirements
 
@@ -912,31 +899,31 @@ Evaluate whether this item affects:
 ```
 
 ## Required AI review schema fields
-- [ ] `decision`
-- [ ] `topic_type`
-- [ ] `relevance_score`
-- [ ] `beginnerluft_fit_score`
-- [ ] `actionability_score`
-- [ ] `business_impact_score`
-- [ ] `urgency_score`
-- [ ] `confidence`
-- [ ] `summary`
-- [ ] `why_relevant`
-- [ ] `recommended_actions`
+- [x] `decision`
+- [x] `topic_type`
+- [x] `relevance_score`
+- [x] `beginnerluft_fit_score`
+- [x] `actionability_score`
+- [x] `business_impact_score`
+- [x] `urgency_score`
+- [x] `confidence`
+- [x] `summary`
+- [x] `why_relevant`
+- [x] `recommended_actions`
 
 ## Ranking logic
-- [ ] Rank items by AI-assigned relevance score and other AI scores
-- [ ] Enforce no duplicates in final top 5
-- [ ] Limit overrepresentation from a single source in the final selection
+- [x] Rank items by AI-assigned relevance score and other AI scores
+- [x] Enforce no duplicates in final top 5
+- [x] Limit overrepresentation from a single source in the final selection
 
 ## Deliverables
-- [ ] Validated AI review pipeline
-- [ ] Ranked top 5 candidate set
+- [x] Validated AI review pipeline
+- [x] Ranked top 5 candidate set
 
 ## Acceptance criteria
-- [ ] Invalid AI output is retried or rejected cleanly
-- [ ] Cached reviews prevent duplicate AI spend
-- [ ] Final selection is stable and explainable
+- [x] Invalid AI output is retried or rejected cleanly
+- [x] Cached reviews prevent duplicate AI spend
+- [x] Final selection is stable and explainable
 
 ---
 

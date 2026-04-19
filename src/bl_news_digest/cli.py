@@ -136,6 +136,9 @@ def run(force_dry_run: bool) -> None:
     from bl_news_digest.ingest.fetch import fetch_all_sources
     from bl_news_digest.ingest.normalize import normalize_and_persist_all
     from bl_news_digest.ingest.dedupe import deduplicate
+    from bl_news_digest.rules.scorer import apply_scores
+    from bl_news_digest.ai.review import review_all_shortlisted
+    from bl_news_digest.ai.rank import select_top_n
     from bl_news_digest.ops.logging_conf import configure_logging
 
     configure_logging()
@@ -168,13 +171,24 @@ def run(force_dry_run: bool) -> None:
         click.echo(f"      Fetched: {total_seen} items seen, {total_new} new raw items")
 
         # Phase 5: Normalize + dedupe
-        click.echo("[2/3] Normalizing and deduplicating...")
+        click.echo("[2/4] Normalizing and deduplicating...")
         normalized = normalize_and_persist_all(conn)
-        rejected = deduplicate(conn)
-        click.echo(f"      Normalized: {normalized} new items, {rejected} near-duplicates rejected")
+        rejected_dupes = deduplicate(conn)
+        click.echo(f"      Normalized: {normalized} new items, {rejected_dupes} near-duplicates rejected")
 
-        # Phases 6–8: coming next
-        click.echo("[3/3] Filter → AI review → Slack post: not yet implemented")
+        # Phase 6: Keyword filter
+        click.echo("[3/4] Applying keyword filter...")
+        shortlisted, rejected_kw = apply_scores(conn)
+        click.echo(f"      Shortlisted: {shortlisted}, rejected (no keyword match): {rejected_kw}")
+
+        # Phase 7: AI review + ranking
+        click.echo("[4/5] AI review and ranking...")
+        reviewed = review_all_shortlisted(conn, dry_run=dry)
+        top = select_top_n(reviewed, conn, top_n=settings.digest_top_n)
+        click.echo(f"      Reviewed: {len(reviewed)} items, selected top {len(top)}")
+
+        # Phase 8: Slack post — coming next
+        click.echo("[5/5] Slack post: not yet implemented")
 
         if dry:
             click.echo("\nDry run complete. No Slack message posted.")
