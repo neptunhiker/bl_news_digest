@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
+import time as _time
 from datetime import datetime, timezone
 
 import feedparser
@@ -23,6 +25,23 @@ def _now_iso() -> str:
 
 def _hash(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _entry_to_json(entry) -> str:
+    """Serialize a feedparser entry to JSON.
+
+    Converts non-JSON-serializable types (time.struct_time → list,
+    FeedParserDict → dict) so the payload round-trips cleanly.
+    """
+    def _default(obj):
+        if isinstance(obj, _time.struct_time):
+            return list(obj)  # _parse_date in normalize.py uses val[:6]
+        try:
+            return dict(obj)
+        except (TypeError, ValueError):
+            return str(obj)
+
+    return json.dumps(dict(entry), default=_default, ensure_ascii=False)
 
 
 @retry(
@@ -72,7 +91,7 @@ def fetch_source(source: dict, conn) -> tuple[int, int]:
             items_seen += 1
             entry_url = getattr(entry, "link", "") or ""
             entry_id = getattr(entry, "id", entry_url) or entry_url
-            payload = str(dict(entry))
+            payload = _entry_to_json(entry)
             raw_hash = _hash(payload)
 
             # Skip exact raw duplicates already stored
@@ -128,6 +147,39 @@ def fetch_source(source: dict, conn) -> tuple[int, int]:
         conn.commit()
 
     return items_seen, items_new
+
+
+def sync_sources(sources: list[dict], conn) -> None:
+    """Upsert sources from config into the sources table.
+
+    Called once at the start of each pipeline run so FK constraints are satisfied.
+    """
+    for s in sources:
+        conn.execute(
+            """
+            INSERT INTO sources (id, family, priority, method, url, enabled, cadence_minutes, parser)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                family=excluded.family,
+                priority=excluded.priority,
+                method=excluded.method,
+                url=excluded.url,
+                enabled=excluded.enabled,
+                cadence_minutes=excluded.cadence_minutes,
+                parser=excluded.parser
+            """,
+            (
+                s["id"],
+                s.get("family", ""),
+                s.get("priority", 1),
+                s.get("method", "rss"),
+                s.get("url", ""),
+                int(s.get("enabled", True)),
+                s.get("cadence_minutes", 1440),
+                s.get("parser", "rss_parser"),
+            ),
+        )
+    conn.commit()
 
 
 def fetch_all_sources(sources: list[dict], conn) -> dict[str, tuple[int, int]]:

@@ -133,7 +133,7 @@ def run(force_dry_run: bool) -> None:
 
     from bl_news_digest.config import get_settings
     from bl_news_digest.db import get_connection, init_database
-    from bl_news_digest.ingest.fetch import fetch_all_sources
+    from bl_news_digest.ingest.fetch import fetch_all_sources, sync_sources
     from bl_news_digest.ingest.normalize import normalize_and_persist_all
     from bl_news_digest.ingest.dedupe import deduplicate
     from bl_news_digest.rules.scorer import apply_scores
@@ -169,6 +169,9 @@ def run(force_dry_run: bool) -> None:
 
     try:
         digest_run_id = create_digest_run(conn, digest_date)
+
+        # Sync sources from YAML into DB (satisfies FK constraints)
+        sync_sources(sources, conn)
 
         # Phase 4: Fetch
         click.echo("\n[1/5] Fetching RSS sources...")

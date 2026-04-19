@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import ast
 import hashlib
+import json
 import logging
 import re
 from datetime import datetime, timezone
@@ -80,7 +80,7 @@ def normalize_raw_item(raw_payload: str, source_id: str, url_original: str) -> d
     Returns None if the entry cannot be normalised (e.g. missing title and URL).
     """
     try:
-        entry = ast.literal_eval(raw_payload)
+        entry = json.loads(raw_payload)
     except Exception as exc:
         logger.warning("Could not parse raw_payload for %s: %s", source_id, exc)
         return None

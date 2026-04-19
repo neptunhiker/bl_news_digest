@@ -977,18 +977,18 @@ Each item should show:
 Make the local project reliable before cloning it to Hetzner.
 
 ## Tasks
-- [ ] Create unit tests for source parsers
-- [ ] Create tests for normalization
-- [ ] Create tests for dedupe logic
-- [ ] Create tests for rule scoring
-- [ ] Create tests for AI schema validation
-- [ ] Create tests for Slack payload generation
-- [ ] Create a full dry-run integration test
+- [x] Create unit tests for source parsers
+- [x] Create tests for normalization
+- [x] Create tests for dedupe logic
+- [x] Create tests for rule scoring
+- [x] Create tests for AI schema validation
+- [x] Create tests for Slack payload generation
+- [x] Create a full dry-run integration test
 
 ## Acceptance criteria
-- [ ] Tests pass locally
-- [ ] `python -m bl_news_digest.cli run --dry-run` works locally
-- [ ] No real secrets are required for dry run
+- [x] Tests pass locally
+- [x] `python -m bl_news_digest.cli run --dry-run` works locally
+- [x] No real secrets are required for dry run
 
 ---
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from bl_news_digest.ingest.normalize import (
     _canonical_url,
     _extract_domain,
@@ -28,11 +30,11 @@ def test_extract_domain_strips_www():
 
 
 def test_normalize_raw_item_basic():
-    raw = str({
+    raw = json.dumps({
         "title": "Neue AVGS-Änderungen 2026",
         "link": "https://www.bmas.de/avgs-2026",
         "summary": "Wichtige Änderungen bei AVGS und Trägerzulassung.",
-        "published_parsed": (2026, 4, 19, 8, 0, 0, 0, 0, 0),
+        "published_parsed": [2026, 4, 19, 8, 0, 0, 0, 0, 0],
         "updated_parsed": None,
         "id": "https://www.bmas.de/avgs-2026",
     })
@@ -49,7 +51,7 @@ def test_normalize_raw_item_basic():
 
 
 def test_normalize_raw_item_strips_html_from_summary():
-    raw = str({
+    raw = json.dumps({
         "title": "Test Artikel",
         "link": "https://www.bmas.de/test",
         "summary": "<p>Wichtig: <strong>AVGS</strong> Änderung</p>",
@@ -66,6 +68,6 @@ def test_normalize_raw_item_strips_html_from_summary():
 
 
 def test_normalize_raw_item_returns_none_for_empty_entry():
-    raw = str({"title": "", "link": "", "summary": ""})
+    raw = json.dumps({"title": "", "link": "", "summary": ""})
     item = normalize_raw_item(raw, "bmas_rss", "")
     assert item is None
