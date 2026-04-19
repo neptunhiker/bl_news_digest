@@ -18,6 +18,41 @@ KEYWORDS: list[str] = [
     "akkreditierung",
     "coaching und aktivierung",
     "bildungsträger",
+    # Labor market institutions
+    "jobcenter",
+    "bundesagentur für arbeit",
+    "arbeitsagentur",
+    "arbeitsvermittlung",
+    "arbeitsförderung",
+    "beschäftigungsförderung",
+    # Unemployment & benefits
+    "arbeitslosigkeit",
+    "arbeitslosengeld",
+    "arbeitslose",
+    "langzeitarbeitslos",
+    "bürgergeld",
+    "grundsicherung",
+    "hartz iv",
+    "sgb ii",
+    "sgb iii",
+    # Training & qualification
+    "weiterbildung",
+    "qualifizierung",
+    "umschulung",
+    "berufsberatung",
+    "fortbildung",
+    "aus- und weiterbildung",
+    # Labor market policy
+    "arbeitsmarkt",
+    "arbeitsmarktpolitik",
+    "kurzarbeit",
+    "mindestlohn",
+    "fachkräftemangel",
+    "fachkräftesicherung",
+    "stellenabbau",
+    "jobsuche",
+    "jobsuchende",
+    "stellensuche",
 ]
 
 # Domains that must always be rejected regardless of keyword matches.

@@ -73,7 +73,7 @@ def review_item(
         return None
 
     # API call
-    client = get_client()
+    client = get_client(api_key=settings.openai_api_key)
     try:
         review: ItemReview = parse_structured(
             client,

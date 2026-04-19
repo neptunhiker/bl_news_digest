@@ -1,12 +1,12 @@
 sources:
   - id: bmas_rss
-    enabled: true
+    enabled: false
     family: bmas
     priority: 1
     method: rss
     parser: rss_parser
     cadence_minutes: 1440
-    url: https://www.bmas.de/DE/Service/Newsletter/RSS/rss.html
+    url: https://www.bmas.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen.xml
 
   - id: bundestag_arbeit_soziales_rss
     enabled: true
@@ -18,13 +18,58 @@ sources:
     url: https://www.bundestag.de/static/appdata/includes/rss/arbeitsoziales.rss
 
   - id: iab_rss
-    enabled: true
+    enabled: false
     family: iab
     priority: 1
     method: rss
     parser: rss_parser
     cadence_minutes: 1440
     url: https://www.iab.de/de/rss/iab_aktuell.xml
+
+  - id: faz_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.faz.net/rss/aktuell/
+
+  - id: zeit_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://newsfeed.zeit.de/all
+
+  - id: tagesschau_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.tagesschau.de/xml/rss2/
+
+  - id: sz_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://rss.sueddeutsche.de/rss/Topthemen
+
+  - id: handelsblatt_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://feeds.cms.handelsblatt.com/schlagzeilen
 
 hard_exclusion_domains:
   - beginnerluft.de

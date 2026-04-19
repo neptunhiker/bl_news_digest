@@ -26,4 +26,6 @@ Evaluate whether this item affects:
 - Regulatory or legislative changes affecting SGB II / SGB III
 
 Respond with a JSON object matching the required schema exactly.
+
+IMPORTANT: All text fields (summary, why_relevant, recommended_actions) MUST be written in German.
 """

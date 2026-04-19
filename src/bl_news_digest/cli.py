@@ -97,6 +97,25 @@ def init_db() -> None:
     click.echo(f"Database initialised at {db_path.resolve()}")
 
 
+@cli.command("clear-db")
+@click.confirmation_option(prompt="This will delete all stored items and digest history. Continue?")
+def clear_db() -> None:
+    """Delete and reinitialise the database."""
+    from bl_news_digest.config import get_settings
+    from bl_news_digest.db import init_database
+    from bl_news_digest.ops.logging_conf import configure_logging
+
+    configure_logging()
+    settings = get_settings()
+    db_path = Path(settings.db_path)
+    if db_path.exists():
+        db_path.unlink()
+        click.echo(f"Deleted {db_path.resolve()}")
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    init_database(str(db_path))
+    click.echo("Database reinitialised. Ready for a fresh run.")
+
+
 @cli.command("list-sources")
 def list_sources() -> None:
     """List all configured sources."""
@@ -208,7 +227,6 @@ def run(force_dry_run: bool) -> None:
             digest_run_id=digest_run_id,
             dry_run=dry or not settings.slack_post_enabled,
             scanned=total_seen,
-            shortlisted=shortlisted,
         )
         if ts:
             click.echo(f"      Posted to Slack (ts={ts})")

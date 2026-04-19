@@ -20,7 +20,7 @@ def _header_block(digest_date: date) -> dict:
     }
 
 
-def _stats_context_block(scanned: int, shortlisted: int, selected: int) -> dict:
+def _stats_context_block(scanned: int, selected: int) -> dict:
     return {
         "type": "context",
         "elements": [
@@ -28,7 +28,6 @@ def _stats_context_block(scanned: int, shortlisted: int, selected: int) -> dict:
                 "type": "mrkdwn",
                 "text": (
                     f"*{scanned}* Artikel geprüft  ·  "
-                    f"*{shortlisted}* relevant gefunden  ·  "
                     f"*{selected}* ausgewählt"
                 ),
             }
@@ -79,9 +78,10 @@ def _item_blocks(item: DigestItemDict, rank: int) -> list[dict]:
             "text": {"type": "mrkdwn", "text": "\n".join(detail_lines)},
         })
 
+    source_link = f"<{url}|{domain}>" if url else domain
     blocks.append({
         "type": "context",
-        "elements": [{"type": "mrkdwn", "text": f"Quelle: {domain}"}],
+        "elements": [{"type": "mrkdwn", "text": f"Quelle: {source_link}"}],
     })
 
     return blocks
@@ -104,13 +104,12 @@ def render_blocks(
     *,
     digest_date: date | None = None,
     scanned: int = 0,
-    shortlisted: int = 0,
 ) -> list[dict]:
     """Build and return a Slack Block Kit blocks list for the digest."""
     today = digest_date or date.today()
     blocks: list[dict] = [
         _header_block(today),
-        _stats_context_block(scanned, shortlisted, len(items)),
+        _stats_context_block(scanned, len(items)),
         _divider(),
     ]
 

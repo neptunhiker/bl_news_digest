@@ -10,9 +10,9 @@ from pydantic import BaseModel
 log = logging.getLogger(__name__)
 
 
-def get_client() -> OpenAI:
-    """Return a configured OpenAI client (reads OPENAI_API_KEY from env automatically)."""
-    return OpenAI()
+def get_client(api_key: str | None = None) -> OpenAI:
+    """Return a configured OpenAI client."""
+    return OpenAI(api_key=api_key)
 
 
 def parse_structured(

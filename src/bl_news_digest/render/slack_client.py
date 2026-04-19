@@ -40,7 +40,7 @@ def fetch_digest_items(
             "title": row["title"],
             "url_canonical": row["url_canonical"],
             "source_domain": row["source_domain"],
-            "summary": row["summary"] or "",
+            "summary": review.summary or "",
             "why_relevant": review.why_relevant,
             "recommended_actions": review.recommended_actions,
             "relevance_score": review.relevance_score,
@@ -57,14 +57,13 @@ def post_digest(
     digest_run_id: int,
     dry_run: bool = False,
     scanned: int = 0,
-    shortlisted: int = 0,
 ) -> str | None:
     """Render the digest and post to Slack (or print in dry-run mode).
 
     Returns the Slack message timestamp (`ts`) on success, None otherwise.
     Persists the payload and response metadata to `outbound_messages`.
     """
-    blocks = render_blocks(items, scanned=scanned, shortlisted=shortlisted)
+    blocks = render_blocks(items, scanned=scanned)
     fallback = render_fallback_text(items)
     payload_json = blocks_to_json(blocks)
 
