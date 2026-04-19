@@ -367,7 +367,7 @@ Tasks:
 Create a new GitHub repo manually.
 
 Recommendations:
-- [ ] Make it private initially
+- [ ] Make it public (no secrets in code; `.env` is gitignored)
 - [ ] Do not auto-add README
 - [ ] Do not auto-add `.gitignore`
 - [ ] Do not auto-add license unless desired
