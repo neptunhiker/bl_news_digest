@@ -714,35 +714,35 @@ Create SQLite persistence for all pipeline stages.
 Fetch raw content from the 3 MVP source groups.
 
 ## Tasks
-- [ ] Implement a generic RSS fetcher that handles all 3 sources
-- [ ] Store raw payloads before normalization
-- [ ] Add timeouts and retries
-- [ ] Add user agent headers
+- [x] Implement a generic RSS fetcher that handles all 3 sources
+- [x] Store raw payloads before normalization
+- [x] Add timeouts and retries
+- [x] Add user agent headers
 
 ## Source-specific strategy
 
 All 3 MVP sources use RSS. A single generic RSS fetcher handles all of them.
 
 ### BMAS RSS
-- [ ] Use RSS parser
-- [ ] Extract title, link, publication date, summary
+- [x] Use RSS parser
+- [x] Extract title, link, publication date, summary
 
 ### Bundestag RSS
-- [ ] Use RSS parser
-- [ ] Extract title, link, publication date, summary
+- [x] Use RSS parser
+- [x] Extract title, link, publication date, summary
 
 ### IAB RSS
-- [ ] Use RSS parser
-- [ ] Extract title, link, publication date, summary
+- [x] Use RSS parser
+- [x] Extract title, link, publication date, summary
 
 ## Deliverables
-- [ ] All 3 MVP RSS sources can be fetched successfully
-- [ ] Raw payloads are stored
+- [x] All 3 MVP RSS sources can be fetched successfully
+- [x] Raw payloads are stored
 
 ## Acceptance criteria
-- [ ] Each source adapter has a unit test with fixture data
-- [ ] Fetch failures are retried and logged
-- [ ] Raw items are persisted before parsing
+- [x] Each source adapter has a unit test with fixture data
+- [x] Fetch failures are retried and logged
+- [x] Raw items are persisted before parsing
 
 ---
 
@@ -752,13 +752,13 @@ All 3 MVP sources use RSS. A single generic RSS fetcher handles all of them.
 Convert all source items into one common schema and remove duplicates.
 
 ## Tasks
-- [ ] Normalize all items into one shared structure
-- [ ] Canonicalize URLs
-- [ ] Strip tracking parameters
-- [ ] Compute title/content hashes
-- [ ] Detect exact duplicates
-- [ ] Detect near-duplicates using title similarity and text similarity
-- [ ] Keep the highest-authority version of duplicate clusters
+- [x] Normalize all items into one shared structure
+- [x] Canonicalize URLs
+- [x] Strip tracking parameters
+- [x] Compute title/content hashes
+- [x] Detect exact duplicates
+- [x] Detect near-duplicates using title similarity and text similarity
+- [x] Keep the highest-authority version of duplicate clusters
 
 ## Normalized item target shape
 
@@ -780,18 +780,18 @@ Convert all source items into one common schema and remove duplicates.
 ```
 
 ## Deduplication rules
-- [ ] Exact URL duplicate -> collapse
-- [ ] Exact content hash duplicate -> collapse
-- [ ] Near-duplicate title/content similarity -> cluster
-- [ ] Keep one canonical item per cluster
+- [x] Exact URL duplicate -> collapse
+- [x] Exact content hash duplicate -> collapse
+- [x] Near-duplicate title/content similarity -> cluster
+- [x] Keep one canonical item per cluster
 
 ## Deliverables
-- [ ] A working normalizer
-- [ ] A working dedupe pipeline
+- [x] A working normalizer
+- [x] A working dedupe pipeline
 
 ## Acceptance criteria
-- [ ] Known duplicates collapse consistently in tests
-- [ ] Canonical URLs are stable across reruns
+- [x] Known duplicates collapse consistently in tests
+- [x] Canonical URLs are stable across reruns
 
 ---
 

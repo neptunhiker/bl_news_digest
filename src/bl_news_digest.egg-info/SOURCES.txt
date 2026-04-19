@@ -39,3 +39,6 @@ src/bl_news_digest/sources/base.py
 src/bl_news_digest/sources/bmas.py
 src/bl_news_digest/sources/bundestag.py
 src/bl_news_digest/sources/iab.py
+tests/test_dedupe.py
+tests/test_fetch.py
+tests/test_normalize.py

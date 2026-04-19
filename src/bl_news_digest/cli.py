@@ -127,14 +127,63 @@ def list_sources() -> None:
 )
 def run(force_dry_run: bool) -> None:
     """Run the full digest pipeline."""
+    from pathlib import Path
+
+    import yaml
+
     from bl_news_digest.config import get_settings
+    from bl_news_digest.db import get_connection, init_database
+    from bl_news_digest.ingest.fetch import fetch_all_sources
+    from bl_news_digest.ingest.normalize import normalize_and_persist_all
+    from bl_news_digest.ingest.dedupe import deduplicate
     from bl_news_digest.ops.logging_conf import configure_logging
 
     configure_logging()
     settings = get_settings()
     dry = force_dry_run or settings.dry_run
     click.echo(f"Starting digest pipeline (dry_run={dry})")
-    click.echo("Pipeline not yet fully implemented — Phase 1 skeleton.")
+
+    # Load sources
+    sources_path = Path("config/sources.yaml")
+    if not sources_path.exists():
+        click.echo("config/sources.yaml not found", err=True)
+        sys.exit(1)
+    with open(sources_path) as f:
+        sources_data = yaml.safe_load(f)
+    sources = sources_data.get("sources", [])
+    exclusion_domains = set(sources_data.get("hard_exclusion_domains", []))
+
+    # Init DB
+    db_path = Path(settings.db_path)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    init_database(str(db_path))
+    conn = get_connection(str(db_path))
+
+    try:
+        # Phase 4: Fetch
+        click.echo("\n[1/3] Fetching RSS sources...")
+        results = fetch_all_sources(sources, conn)
+        total_seen = sum(v[0] for v in results.values())
+        total_new = sum(v[1] for v in results.values())
+        click.echo(f"      Fetched: {total_seen} items seen, {total_new} new raw items")
+
+        # Phase 5: Normalize + dedupe
+        click.echo("[2/3] Normalizing and deduplicating...")
+        normalized = normalize_and_persist_all(conn)
+        rejected = deduplicate(conn)
+        click.echo(f"      Normalized: {normalized} new items, {rejected} near-duplicates rejected")
+
+        # Phases 6–8: coming next
+        click.echo("[3/3] Filter → AI review → Slack post: not yet implemented")
+
+        if dry:
+            click.echo("\nDry run complete. No Slack message posted.")
+        else:
+            click.echo("\nRun complete.")
+
+    finally:
+        conn.close()
+
     sys.exit(0)
 
 
