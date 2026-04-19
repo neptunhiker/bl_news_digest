@@ -933,41 +933,41 @@ Evaluate whether this item affects:
 Render the daily digest to Slack Block Kit and post it into a fixed channel.
 
 ## Tasks
-- [ ] Create a Slack client wrapper
-- [ ] Render digest blocks from structured digest data
-- [ ] Create fallback plain text message
-- [ ] Implement dry-run mode without posting
-- [ ] Store Slack response metadata in DB
+- [x] Create a Slack client wrapper
+- [x] Render digest blocks from structured digest data
+- [x] Create fallback plain text message
+- [x] Implement dry-run mode without posting
+- [x] Store Slack response metadata in DB
 
 ## Required Slack digest structure
-- [ ] Header block
-- [ ] Context block with run stats
-- [ ] Short editor note
-- [ ] 5 ranked item sections
-- [ ] Final action summary
+- [x] Header block
+- [x] Context block with run stats
+- [x] Short editor note
+- [x] 5 ranked item sections
+- [x] Final action summary
 
 ## Per-item content requirements
 Each item should show:
-- [ ] headline
-- [ ] source
-- [ ] short summary
-- [ ] why it matters for BeginnerLuft
-- [ ] recommended action
-- [ ] source URL
+- [x] headline
+- [x] source
+- [x] short summary
+- [x] why it matters for BeginnerLuft
+- [x] recommended action
+- [x] source URL
 
 ## Slack environment variables
-- [ ] `SLACK_BOT_TOKEN`
-- [ ] `SLACK_CHANNEL_ID`
-- [ ] `SLACK_POST_ENABLED`
+- [x] `SLACK_BOT_TOKEN`
+- [x] `SLACK_CHANNEL_ID`
+- [x] `SLACK_POST_ENABLED`
 
 ## Deliverables
-- [ ] Valid Block Kit payload generator
-- [ ] Working Slack post command
+- [x] Valid Block Kit payload generator
+- [x] Working Slack post command
 
 ## Acceptance criteria
-- [ ] Dry run prints payload without posting
-- [ ] Live run posts successfully when enabled
-- [ ] Posted message metadata is persisted
+- [x] Dry run prints payload without posting
+- [x] Live run posts successfully when enabled
+- [x] Posted message metadata is persisted
 
 ---
 

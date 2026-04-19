@@ -139,6 +139,9 @@ def run(force_dry_run: bool) -> None:
     from bl_news_digest.rules.scorer import apply_scores
     from bl_news_digest.ai.review import review_all_shortlisted
     from bl_news_digest.ai.rank import select_top_n
+    from bl_news_digest.render.slack_client import (
+        create_digest_run, fetch_digest_items, finish_digest_run, post_digest,
+    )
     from bl_news_digest.ops.logging_conf import configure_logging
 
     configure_logging()
@@ -154,7 +157,6 @@ def run(force_dry_run: bool) -> None:
     with open(sources_path) as f:
         sources_data = yaml.safe_load(f)
     sources = sources_data.get("sources", [])
-    exclusion_domains = set(sources_data.get("hard_exclusion_domains", []))
 
     # Init DB
     db_path = Path(settings.db_path)
@@ -162,22 +164,27 @@ def run(force_dry_run: bool) -> None:
     init_database(str(db_path))
     conn = get_connection(str(db_path))
 
+    from datetime import date
+    digest_date = date.today().isoformat()
+
     try:
+        digest_run_id = create_digest_run(conn, digest_date)
+
         # Phase 4: Fetch
-        click.echo("\n[1/3] Fetching RSS sources...")
+        click.echo("\n[1/5] Fetching RSS sources...")
         results = fetch_all_sources(sources, conn)
         total_seen = sum(v[0] for v in results.values())
         total_new = sum(v[1] for v in results.values())
         click.echo(f"      Fetched: {total_seen} items seen, {total_new} new raw items")
 
         # Phase 5: Normalize + dedupe
-        click.echo("[2/4] Normalizing and deduplicating...")
+        click.echo("[2/5] Normalizing and deduplicating...")
         normalized = normalize_and_persist_all(conn)
         rejected_dupes = deduplicate(conn)
         click.echo(f"      Normalized: {normalized} new items, {rejected_dupes} near-duplicates rejected")
 
         # Phase 6: Keyword filter
-        click.echo("[3/4] Applying keyword filter...")
+        click.echo("[3/5] Applying keyword filter...")
         shortlisted, rejected_kw = apply_scores(conn)
         click.echo(f"      Shortlisted: {shortlisted}, rejected (no keyword match): {rejected_kw}")
 
@@ -187,13 +194,41 @@ def run(force_dry_run: bool) -> None:
         top = select_top_n(reviewed, conn, top_n=settings.digest_top_n)
         click.echo(f"      Reviewed: {len(reviewed)} items, selected top {len(top)}")
 
-        # Phase 8: Slack post — coming next
-        click.echo("[5/5] Slack post: not yet implemented")
+        # Phase 8: Slack post
+        click.echo("[5/5] Rendering and posting to Slack...")
+        digest_items = fetch_digest_items(conn, top)
+        ts = post_digest(
+            digest_items,
+            conn,
+            channel_id=settings.slack_channel_id,
+            token=settings.slack_bot_token,
+            digest_run_id=digest_run_id,
+            dry_run=dry or not settings.slack_post_enabled,
+            scanned=total_seen,
+            shortlisted=shortlisted,
+        )
+        if ts:
+            click.echo(f"      Posted to Slack (ts={ts})")
+        else:
+            click.echo("      Slack post skipped (dry run or SLACK_POST_ENABLED=false)")
+
+        finish_digest_run(
+            conn, digest_run_id,
+            status="ok",
+            scanned=total_seen,
+            candidate=shortlisted,
+            reviewed=len(reviewed),
+            selected=len(top),
+        )
 
         if dry:
             click.echo("\nDry run complete. No Slack message posted.")
         else:
             click.echo("\nRun complete.")
+
+    except Exception as exc:
+        finish_digest_run(conn, digest_run_id, status="error")
+        raise
 
     finally:
         conn.close()
