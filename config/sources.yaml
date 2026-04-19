@@ -1,0 +1,34 @@
+sources:
+  - id: bmas_rss
+    enabled: true
+    family: bmas
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.bmas.de/DE/Service/Newsletter/RSS/rss.html
+
+  - id: bundestag_arbeit_soziales_rss
+    enabled: true
+    family: bundestag
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.bundestag.de/static/appdata/includes/rss/arbeitsoziales.rss
+
+  - id: iab_rss
+    enabled: true
+    family: iab
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.iab.de/de/rss/iab_aktuell.xml
+
+hard_exclusion_domains:
+  - beginnerluft.de
+  - www.beginnerluft.de
+  - linkedin.com
+  - instagram.com
+  - youtube.com

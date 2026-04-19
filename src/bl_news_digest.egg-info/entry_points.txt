@@ -1,0 +1,2 @@
+[console_scripts]
+bl-news-digest = bl_news_digest.cli:cli
