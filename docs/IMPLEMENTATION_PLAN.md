@@ -196,9 +196,9 @@ cd ~/apps/bl_news_digest
 ```
 
 Tasks:
-- [ ] Create local project folder
-- [ ] Open it in your editor
-- [ ] Use a dedicated Python version if needed
+- [x] Create local project folder
+- [x] Open it in your editor
+- [x] Use a dedicated Python version if needed
 
 ### 3.2 Initialize Git locally
 
@@ -207,8 +207,8 @@ git init
 ```
 
 Tasks:
-- [ ] Initialize local Git repository
-- [ ] Confirm `git status` works
+- [x] Initialize local Git repository
+- [x] Confirm `git status` works
 
 ### 3.3 Create the initial folder structure
 
@@ -222,11 +222,11 @@ mkdir -p logs
 ```
 
 Tasks:
-- [ ] Create source package folder
-- [ ] Create tests folder
-- [ ] Create config folder
-- [ ] Create data folders
-- [ ] Create logs folder
+- [x] Create source package folder
+- [x] Create tests folder
+- [x] Create config folder
+- [x] Create data folders
+- [x] Create logs folder
 
 ### 3.4 Create the virtual environment locally
 
@@ -236,10 +236,10 @@ source .venv/bin/activate
 ```
 
 Tasks:
-- [ ] Create `.venv`
-- [ ] Activate it
-- [ ] Confirm `python --version`
-- [ ] Confirm `which python`
+- [x] Create `.venv`
+- [x] Activate it
+- [x] Confirm `python --version`
+- [x] Confirm `which python`
 
 ### 3.5 Create `.gitignore`
 
@@ -285,11 +285,11 @@ logs/
 ```
 
 Tasks:
-- [ ] Create `.gitignore`
-- [ ] Ensure `.env` is ignored
-- [ ] Ensure database files are ignored
-- [ ] Ensure logs are ignored
-- [ ] Keep `.env.example` committed
+- [x] Create `.gitignore`
+- [x] Ensure `.env` is ignored
+- [x] Ensure database files are ignored
+- [x] Ensure logs are ignored
+- [x] Keep `.env.example` committed
 
 ### 3.6 Create `.env.example`
 
@@ -316,9 +316,9 @@ AI_REVIEW_CACHE_ENABLED=true
 ```
 
 Tasks:
-- [ ] Create `.env.example`
-- [ ] Use fake placeholder secrets only
-- [ ] Do not place real credentials into Git
+- [x] Create `.env.example`
+- [x] Use fake placeholder secrets only
+- [x] Do not place real credentials into Git
 
 ### 3.7 Create local `.env`
 
@@ -329,8 +329,8 @@ cp .env.example .env
 ```
 
 Tasks:
-- [ ] Create `.env` locally
-- [ ] Keep fake tokens at first if implementation is still in progress
+- [x] Create `.env` locally
+- [x] Keep fake tokens at first if implementation is still in progress
 - [ ] Replace later with real values only when ready
 
 ### 3.8 Create `README.md`
@@ -343,9 +343,9 @@ The README should contain:
 - how deployment to Hetzner works
 
 Tasks:
-- [ ] Create `README.md`
-- [ ] Document local setup
-- [ ] Document production setup
+- [x] Create `README.md`
+- [x] Document local setup
+- [x] Document production setup
 
 ### 3.9 Create initial commit locally
 
@@ -355,8 +355,8 @@ git commit -m "Initial project skeleton for AVGS Slack digest"
 ```
 
 Tasks:
-- [ ] Create initial commit
-- [ ] Confirm `.env` is not tracked
+- [x] Create initial commit
+- [x] Confirm `.env` is not tracked
 
 ---
 
@@ -415,13 +415,13 @@ This implementation must be executed in phases. Do not skip ahead until the acce
 Create the Python project structure, environment management, configuration loading, and local run entrypoints.
 
 ## Tasks
-- [ ] Create `pyproject.toml`
-- [ ] Add dependency management
-- [ ] Create package structure under `src/bl_news_digest/`
-- [ ] Create CLI entrypoint `python -m bl_news_digest.cli`
-- [ ] Add configuration loader using environment variables
-- [ ] Add structured logging configuration
-- [ ] Add `README.md` with setup and run instructions
+- [x] Create `pyproject.toml`
+- [x] Add dependency management
+- [x] Create package structure under `src/bl_news_digest/`
+- [x] Create CLI entrypoint `python -m bl_news_digest.cli`
+- [x] Add configuration loader using environment variables
+- [x] Add structured logging configuration
+- [x] Add `README.md` with setup and run instructions
 
 ## Required folder structure
 ```text
@@ -482,31 +482,31 @@ bl_news_digest/
 ```
 
 ## Suggested dependencies
-- [ ] `requests`
-- [ ] `httpx`
-- [ ] `feedparser`
-- [ ] `beautifulsoup4`
-- [ ] `lxml`
-- [ ] `trafilatura`
-- [ ] `pydantic`
-- [ ] `python-dotenv`
-- [ ] `rapidfuzz`
-- [ ] `slack_sdk`
-- [ ] `tenacity`
-- [ ] `orjson`
-- [ ] `pytest`
-- [ ] `freezegun`
-- [ ] `responses` or `respx`
+- [ ] `requests` *(skipped — RSS-only, httpx used instead)*
+- [x] `httpx`
+- [x] `feedparser`
+- [ ] `beautifulsoup4` *(skipped — RSS-only MVP)*
+- [ ] `lxml` *(skipped — RSS-only MVP)*
+- [ ] `trafilatura` *(skipped — RSS-only MVP)*
+- [x] `pydantic`
+- [x] `python-dotenv`
+- [x] `rapidfuzz`
+- [x] `slack_sdk`
+- [x] `tenacity`
+- [x] `orjson`
+- [x] `pytest`
+- [x] `freezegun`
+- [x] `responses` or `respx`
 
 ## Deliverables
-- [ ] A runnable Python package
-- [ ] A CLI command that prints config and exits successfully
-- [ ] Logging to stdout and file
+- [x] A runnable Python package
+- [x] A CLI command that prints config and exits successfully
+- [x] Logging to stdout and file
 
 ## Acceptance criteria
-- [ ] `python -m bl_news_digest.cli doctor` runs successfully
-- [ ] Missing required env vars produce clear errors
-- [ ] Logs are emitted in structured text or JSON format
+- [x] `python -m bl_news_digest.cli doctor` runs successfully
+- [x] Missing required env vars produce clear errors
+- [x] Logs are emitted in structured text or JSON format
 
 ---
 
@@ -516,29 +516,29 @@ bl_news_digest/
 Create a stable configuration model for the app and a formal source registry.
 
 ## Tasks
-- [ ] Define required env vars
-- [ ] Implement config validation with Pydantic
-- [ ] Create a source registry file in `config/sources.yaml`
-- [ ] Assign each source an ID, family, priority, fetch method, cadence, and parser name
-- [ ] Add source toggles so sources can be enabled or disabled without code changes
-- [ ] Add hard exclusion domains list, including BeginnerLuft
-- [ ] Add a local `doctor` command
-- [ ] Add a local `run --dry-run` command
-- [ ] Add a local `list-sources` command
+- [x] Define required env vars
+- [x] Implement config validation with Pydantic
+- [x] Create a source registry file in `config/sources.yaml`
+- [x] Assign each source an ID, family, priority, fetch method, cadence, and parser name
+- [x] Add source toggles so sources can be enabled or disabled without code changes
+- [x] Add hard exclusion domains list, including BeginnerLuft
+- [x] Add a local `doctor` command
+- [x] Add a local `run --dry-run` command
+- [x] Add a local `list-sources` command
 
 ## Required environment variables
-- [ ] `OPENAI_API_KEY`
-- [ ] `OPENAI_MODEL`
-- [ ] `SLACK_BOT_TOKEN`
-- [ ] `SLACK_CHANNEL_ID`
-- [ ] `SLACK_POST_ENABLED`
-- [ ] `DB_PATH`
-- [ ] `LOG_LEVEL`
-- [ ] `HTTP_USER_AGENT`
-- [ ] `TIMEZONE`
-- [ ] `DIGEST_TOP_N`
-- [ ] `DRY_RUN`
-- [ ] `AI_REVIEW_CACHE_ENABLED`
+- [x] `OPENAI_API_KEY`
+- [x] `OPENAI_MODEL`
+- [x] `SLACK_BOT_TOKEN`
+- [x] `SLACK_CHANNEL_ID`
+- [x] `SLACK_POST_ENABLED`
+- [x] `DB_PATH`
+- [x] `LOG_LEVEL`
+- [x] `HTTP_USER_AGENT`
+- [x] `TIMEZONE`
+- [x] `DIGEST_TOP_N`
+- [x] `DRY_RUN`
+- [x] `AI_REVIEW_CACHE_ENABLED`
 
 ## Example `sources.yaml`
 
@@ -580,14 +580,14 @@ hard_exclusion_domains:
 ```
 
 ## Deliverables
-- [ ] A validated app config object
-- [ ] Source registry loads successfully
-- [ ] `doctor` command confirms config correctness
+- [x] A validated app config object
+- [x] Source registry loads successfully
+- [x] `doctor` command confirms config correctness
 
 ## Acceptance criteria
-- [ ] App fails fast on invalid env values
-- [ ] Source registry lists exactly the approved MVP sources
-- [ ] Exclusion domains are loaded and applied globally
+- [x] App fails fast on invalid env values
+- [x] Source registry lists exactly the approved MVP sources
+- [x] Exclusion domains are loaded and applied globally
 
 ---
 
@@ -597,113 +597,113 @@ hard_exclusion_domains:
 Create SQLite persistence for all pipeline stages.
 
 ## Tasks
-- [ ] Implement database initialization script
-- [ ] Create tables for sources, raw items, normalized items, reviews, digest runs, and outbound messages
-- [ ] Add indexes for canonical URL, hashes, and run dates
+- [x] Implement database initialization script
+- [x] Create tables for sources, raw items, normalized items, reviews, digest runs, and outbound messages
+- [x] Add indexes for canonical URL, hashes, and run dates
 - [ ] Add helper methods for insert, upsert, and lookups
 - [ ] Add migration approach for future schema changes
 
 ## Required SQLite tables
 
 ### `sources`
-- [ ] `id`
-- [ ] `family`
-- [ ] `priority`
-- [ ] `method`
-- [ ] `url`
-- [ ] `enabled`
-- [ ] `cadence_minutes`
-- [ ] `parser`
+- [x] `id`
+- [x] `family`
+- [x] `priority`
+- [x] `method`
+- [x] `url`
+- [x] `enabled`
+- [x] `cadence_minutes`
+- [x] `parser`
 
 ### `fetch_runs`
-- [ ] `id`
-- [ ] `source_id`
-- [ ] `started_at`
-- [ ] `finished_at`
-- [ ] `status`
-- [ ] `items_seen`
-- [ ] `items_new`
-- [ ] `error_text`
+- [x] `id`
+- [x] `source_id`
+- [x] `started_at`
+- [x] `finished_at`
+- [x] `status`
+- [x] `items_seen`
+- [x] `items_new`
+- [x] `error_text`
 
 ### `raw_items`
-- [ ] `id`
-- [ ] `source_id`
-- [ ] `fetch_run_id`
-- [ ] `url_original`
-- [ ] `external_id`
-- [ ] `raw_payload`
-- [ ] `raw_hash`
-- [ ] `stored_at`
+- [x] `id`
+- [x] `source_id`
+- [x] `fetch_run_id`
+- [x] `url_original`
+- [x] `external_id`
+- [x] `raw_payload`
+- [x] `raw_hash`
+- [x] `stored_at`
 
 ### `normalized_items`
-- [ ] `id`
-- [ ] `source_id`
-- [ ] `url_original`
-- [ ] `url_canonical`
-- [ ] `source_domain`
-- [ ] `title`
-- [ ] `summary`
-- [ ] `content_text`
-- [ ] `published_at`
-- [ ] `discovered_at`
-- [ ] `content_hash`
-- [ ] `rule_score`
-- [ ] `status`
+- [x] `id`
+- [x] `source_id`
+- [x] `url_original`
+- [x] `url_canonical`
+- [x] `source_domain`
+- [x] `title`
+- [x] `summary`
+- [x] `content_text`
+- [x] `published_at`
+- [x] `discovered_at`
+- [x] `content_hash`
+- [x] `rule_score`
+- [x] `status`
 
 ### `item_reviews`
-- [ ] `id`
-- [ ] `item_id`
-- [ ] `model_name`
-- [ ] `decision`
-- [ ] `topic_type`
-- [ ] `relevance_score`
-- [ ] `beginnerluft_fit_score`
-- [ ] `actionability_score`
-- [ ] `business_impact_score`
-- [ ] `urgency_score`
-- [ ] `confidence`
-- [ ] `summary`
-- [ ] `why_relevant_json`
-- [ ] `recommended_actions_json`
-- [ ] `review_json`
-- [ ] `created_at`
+- [x] `id`
+- [x] `item_id`
+- [x] `model_name`
+- [x] `decision`
+- [x] `topic_type`
+- [x] `relevance_score`
+- [x] `beginnerluft_fit_score`
+- [x] `actionability_score`
+- [x] `business_impact_score`
+- [x] `urgency_score`
+- [x] `confidence`
+- [x] `summary`
+- [x] `why_relevant_json`
+- [x] `recommended_actions_json`
+- [x] `review_json`
+- [x] `created_at`
 
 ### `digest_runs`
-- [ ] `id`
-- [ ] `digest_date`
-- [ ] `started_at`
-- [ ] `finished_at`
-- [ ] `status`
-- [ ] `scanned_count`
-- [ ] `candidate_count`
-- [ ] `reviewed_count`
-- [ ] `selected_count`
-- [ ] `editor_note`
+- [x] `id`
+- [x] `digest_date`
+- [x] `started_at`
+- [x] `finished_at`
+- [x] `status`
+- [x] `scanned_count`
+- [x] `candidate_count`
+- [x] `reviewed_count`
+- [x] `selected_count`
+- [x] `editor_note`
 
 ### `digest_items`
-- [ ] `digest_run_id`
-- [ ] `item_id`
-- [ ] `rank`
-- [ ] `final_score`
-- [ ] `why_relevant`
-- [ ] `recommended_action`
+- [x] `digest_run_id`
+- [x] `item_id`
+- [x] `rank`
+- [x] `final_score`
+- [x] `why_relevant`
+- [x] `recommended_action`
 
 ### `outbound_messages`
-- [ ] `id`
-- [ ] `digest_run_id`
-- [ ] `channel_id`
-- [ ] `provider`
-- [ ] `provider_message_id`
-- [ ] `payload_json`
-- [ ] `posted_at`
+- [x] `id`
+- [x] `digest_run_id`
+- [x] `channel_id`
+- [x] `provider`
+- [x] `provider_message_id`
+- [x] `payload_json`
+- [x] `posted_at`
 
 ## Deliverables
-- [ ] Database initializes on first run
-- [ ] Tables and indexes are present
+- [x] Database initializes on first run
+- [x] Tables and indexes are present
 - [ ] Inserts and lookups work reliably
 
 ## Acceptance criteria
-- [ ] `python -m bl_news_digest.cli init-db` succeeds
+- [x] `python -m bl_news_digest.cli init-db` succeeds
 - [ ] Dry run writes run metadata into SQLite
 
 ---
