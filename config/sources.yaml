@@ -1,12 +1,12 @@
 sources:
   - id: bmas_rss
-    enabled: false
+    enabled: true
     family: bmas
     priority: 1
     method: rss
     parser: rss_parser
     cadence_minutes: 1440
-    url: https://www.bmas.de/SiteGlobals/Functions/RSS/DE/Feed/RSSNewsfeed_Meldungen.xml
+    url: https://www.bmas.de/SiteGlobals/Functions/RSSFeed/DE/RSSNewsfeed/RSSNewsfeed.xml
 
   - id: bundestag_arbeit_soziales_rss
     enabled: true
@@ -18,13 +18,13 @@ sources:
     url: https://www.bundestag.de/static/appdata/includes/rss/arbeitsoziales.rss
 
   - id: iab_rss
-    enabled: false
+    enabled: true
     family: iab
     priority: 1
     method: rss
     parser: rss_parser
     cadence_minutes: 1440
-    url: https://www.iab.de/de/rss/iab_aktuell.xml
+    url: https://iab-forum.de/feed/
 
   - id: faz_rss
     enabled: true
@@ -70,6 +70,15 @@ sources:
     parser: rss_parser
     cadence_minutes: 1440
     url: https://feeds.cms.handelsblatt.com/schlagzeilen
+
+  - id: morgenpost_rss
+    enabled: true
+    family: newspaper
+    priority: 2
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.morgenpost.de/rss
 
 hard_exclusion_domains:
   - beginnerluft.de

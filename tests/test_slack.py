@@ -82,7 +82,7 @@ def test_render_blocks_header_text():
     blocks = render_blocks([SAMPLE_ITEM], digest_date=date(2026, 4, 19))
     header = next(b for b in blocks if b["type"] == "header")
     assert "2026" in header["text"]["text"]
-    assert "Digest" in header["text"]["text"]
+    assert "News" in header["text"]["text"]
 
 
 def test_render_blocks_contains_item_title():

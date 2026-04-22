@@ -122,8 +122,8 @@ def persist_normalized_item(item: dict, conn) -> int | None:
     """
     cursor = conn.cursor()
     existing = cursor.execute(
-        "SELECT id FROM normalized_items WHERE url_canonical = ?",
-        (item["url_canonical"],),
+        "SELECT id FROM normalized_items WHERE url_canonical = ? OR content_hash = ?",
+        (item["url_canonical"], item["content_hash"]),
     ).fetchone()
     if existing:
         return None

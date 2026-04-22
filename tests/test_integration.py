@@ -107,6 +107,39 @@ SOURCE_URLS = {
     "https://www.iab.de/de/rss/iab_aktuell.xml": RSS_IAB,
 }
 
+# Minimal sources.yaml fixture that exactly matches the mocked URLs above.
+# Using a fixture rather than the real config/sources.yaml makes the test
+# resilient to changes in which sources are enabled in production.
+SOURCES_YAML_FIXTURE = """\
+sources:
+  - id: bmas_rss
+    enabled: true
+    family: bmas
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.bmas.de/DE/Service/Newsletter/RSS/rss.html
+
+  - id: bundestag_arbeit_soziales_rss
+    enabled: true
+    family: bundestag
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.bundestag.de/static/appdata/includes/rss/arbeitsoziales.rss
+
+  - id: iab_rss
+    enabled: true
+    family: iab
+    priority: 1
+    method: rss
+    parser: rss_parser
+    cadence_minutes: 1440
+    url: https://www.iab.de/de/rss/iab_aktuell.xml
+"""
+
 
 # ---------------------------------------------------------------------------
 # Helper: build a minimal .env in the tmp dir and point config there
@@ -145,9 +178,7 @@ def test_full_dry_run_pipeline(mock_ai, tmp_path):
 
     sources_dir = tmp_path / "config"
     sources_dir.mkdir()
-    (sources_dir / "sources.yaml").write_text(
-        (Path(__file__).parent.parent / "config" / "sources.yaml").read_text()
-    )
+    (sources_dir / "sources.yaml").write_text(SOURCES_YAML_FIXTURE)
 
     # lru_cache means Settings is cached from previous tests — clear it
     from bl_news_digest.config import get_settings

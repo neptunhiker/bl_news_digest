@@ -16,7 +16,7 @@ def _header_block(digest_date: date) -> dict:
     formatted = digest_date.strftime("%-d. %B %Y")
     return {
         "type": "header",
-        "text": {"type": "plain_text", "text": f"AVGS-Digest — {formatted}", "emoji": True},
+        "text": {"type": "plain_text", "text": f"BeginnerLuft AVGS-News — {formatted}", "emoji": True},
     }
 
 
@@ -27,7 +27,7 @@ def _stats_context_block(scanned: int, selected: int) -> dict:
             {
                 "type": "mrkdwn",
                 "text": (
-                    f"*{scanned}* Artikel geprüft  ·  "
+                    f"*{scanned}* Artikel gescannt  ·  "
                     f"*{selected}* ausgewählt"
                 ),
             }
@@ -68,7 +68,7 @@ def _item_blocks(item: DigestItemDict, rank: int) -> list[dict]:
 
     detail_lines: list[str] = []
     if why_relevant:
-        detail_lines.append(f":mag: *Warum relevant:* {why_relevant}")
+        detail_lines.append(f":mag: *Warum relevant für BeginnerLuft:* {why_relevant}")
     if action_text:
         detail_lines.append(f":dart: *Empfehlung:* {action_text}")
 
@@ -87,16 +87,7 @@ def _item_blocks(item: DigestItemDict, rank: int) -> list[dict]:
     return blocks
 
 
-def _footer_block() -> dict:
-    return {
-        "type": "context",
-        "elements": [
-            {
-                "type": "mrkdwn",
-                "text": "_Diese Zusammenfassung wird täglich automatisch erstellt._",
-            }
-        ],
-    }
+
 
 
 def render_blocks(
@@ -117,7 +108,6 @@ def render_blocks(
         blocks.extend(_item_blocks(item, rank))
         blocks.append(_divider())
 
-    blocks.append(_footer_block())
     return blocks
 
 
