@@ -58,6 +58,7 @@ def select_top_n(
 
     # Apply per-domain cap
     selected: list[tuple[int, ItemReview]] = []
+    selected_ids: set[int] = set()
     domain_counts: dict[str, int] = {}
     for item_id, review in candidates:
         domain = id_to_domain[item_id]
@@ -65,9 +66,24 @@ def select_top_n(
             log.debug("Skipping item %d (%s): domain cap reached for %s", item_id, review.topic_type, domain)
             continue
         selected.append((item_id, review))
+        selected_ids.add(item_id)
         domain_counts[domain] = domain_counts.get(domain, 0) + 1
         if len(selected) >= top_n:
             break
+
+    # Mark selected items as 'selected' and all other reviewed items as 'reviewed'
+    # so that deduplicate()'s cross-run pass and review_all_shortlisted() do not
+    # re-process them in future pipeline runs.
+    all_reviewed_ids = {item_id for item_id, _ in reviews}
+    for item_id, _ in selected:
+        conn.execute(
+            "UPDATE normalized_items SET status = 'selected' WHERE id = ?", (item_id,)
+        )
+    for item_id in all_reviewed_ids - selected_ids:
+        conn.execute(
+            "UPDATE normalized_items SET status = 'reviewed' WHERE id = ?", (item_id,)
+        )
+    conn.commit()
 
     log.info("Ranked %d candidates -> selected %d top items", len(candidates), len(selected))
     return selected
