@@ -256,14 +256,17 @@ def test_full_dry_run_pipeline(mock_ai, tmp_path):
     assert reviews_count == 0
 
     # Digest run recorded
-    run = conn.execute("SELECT status, scanned_count FROM digest_runs").fetchone()
+    run = conn.execute("SELECT status, scanned_count, selected_count FROM digest_runs").fetchone()
     assert run is not None
     assert run["status"] == "ok"
     assert run["scanned_count"] == 5
 
-    # Outbound message persisted (dry-run: posted_at=NULL)
+    # Slack payloads are only persisted when at least one digest item is selected.
     outbound = conn.execute("SELECT posted_at FROM outbound_messages").fetchone()
-    assert outbound is not None
-    assert outbound["posted_at"] is None  # dry run — not actually posted
+    if run["selected_count"] == 0:
+      assert outbound is None
+    else:
+      assert outbound is not None
+      assert outbound["posted_at"] is None  # dry run — not actually posted
 
     conn.close()

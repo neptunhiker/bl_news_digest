@@ -202,3 +202,24 @@ def test_post_digest_live_calls_slack_and_persists_ts(db_conn):
     ).fetchone()
     assert row["provider_message_id"] == "1234567890.123"
     assert row["posted_at"] is not None
+
+
+def test_post_digest_empty_items_skips_live_slack_post(db_conn):
+    run_id = create_digest_run(db_conn, "2026-04-19")
+
+    mock_wc = MagicMock()
+
+    with patch("bl_news_digest.render.slack_client.get_slack_client", return_value=mock_wc):
+        ts = post_digest(
+            [], db_conn,
+            channel_id="C123", token="xoxb-test",
+            digest_run_id=run_id, dry_run=False,
+        )
+
+    assert ts is None
+    mock_wc.chat_postMessage.assert_not_called()
+    row = db_conn.execute(
+        "SELECT COUNT(*) AS count FROM outbound_messages WHERE digest_run_id=?",
+        (run_id,),
+    ).fetchone()
+    assert row["count"] == 0

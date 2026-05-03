@@ -231,7 +231,7 @@ def run(force_dry_run: bool) -> None:
         if ts:
             click.echo(f"      Posted to Slack (ts={ts})")
         else:
-            click.echo("      Slack post skipped (dry run or SLACK_POST_ENABLED=false)")
+            click.echo("      Slack post skipped (no selected items, dry run, or SLACK_POST_ENABLED=false)")
 
         finish_digest_run(
             conn, digest_run_id,

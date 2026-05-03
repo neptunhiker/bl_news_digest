@@ -63,6 +63,10 @@ def post_digest(
     Returns the Slack message timestamp (`ts`) on success, None otherwise.
     Persists the payload and response metadata to `outbound_messages`.
     """
+    if not items:
+        log.info("No selected digest items; skipping Slack post")
+        return None
+
     blocks = render_blocks(items, scanned=scanned)
     fallback = render_fallback_text(items)
     payload_json = blocks_to_json(blocks)
